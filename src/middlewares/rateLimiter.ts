@@ -1,4 +1,4 @@
-﻿import rateLimit from "express-rate-limit";
+import rateLimit from "express-rate-limit";
 
 // Rate limiter for general API endpoints
 export const apiLimiter = rateLimit({
@@ -35,3 +35,16 @@ export const chatLimiter = rateLimit({
     message: "Chat rate limit reached. Please slow down.",
   },
 });
+
+// Rate limiter for Auth Login & Register
+export const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Max 10 attempts per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many authentication attempts from this IP. Please try again after 15 minutes.",
+  },
+});
+
